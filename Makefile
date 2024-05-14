@@ -139,6 +139,18 @@ watch:
 		inotifywait $(INOTIFYWAIT_OPTS) $(SOURCES) $(HEADERS); \
 	done
 
+.PHONY: check
+check:
+	@printf '%s\n' 'Files without License Header:'
+	@! grep \
+		--color=always \
+		--fixed-strings \
+		--files-without-match \
+		--word-regexp \
+		--file=assets/header.h \
+		$(SOURCES) $(HEADERS) \
+		| grep '^'
+
 .PHONY: PRINT-MACROS
 PRINT-MACROS:
 	@make --print-data-base \
